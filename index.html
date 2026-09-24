@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quick Transport – Login</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/auth.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body class="auth-body">
+  <div class="auth-bg">
+    <div class="auth-orb orb1"></div>
+    <div class="auth-orb orb2"></div>
+    <div class="auth-orb orb3"></div>
+  </div>
+
+  <div class="auth-container">
+    <div class="auth-brand">
+      <div class="brand-icon">⚡</div>
+      <h1 class="brand-name">Quick<span>Transport</span></h1>
+      <p class="brand-tagline">Move fast. Move smart.</p>
+    </div>
+
+    <div class="auth-card" id="loginCard">
+      <h2 class="auth-title">Welcome back</h2>
+      <p class="auth-subtitle">Sign in to your account</p>
+
+      <div id="loginAlert" class="alert hidden"></div>
+
+      <form id="loginForm" class="auth-form" action="php/login.php" method="POST">
+        <div class="form-group">
+          <label for="loginEmail">Email address</label>
+          <div class="input-wrap">
+            <span class="input-icon">✉</span>
+            <input type="email" id="loginEmail" name="email" placeholder="you@example.com" required/>
+          </div>
+          <span class="field-error" id="loginEmailErr"></span>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="loginPassword" name="password" placeholder="••••••••" required/>
+            <button type="button" class="toggle-pw" onclick="togglePw('loginPassword',this)">👁</button>
+          </div>
+          <span class="field-error" id="loginPasswordErr"></span>
+        </div>
+        <button type="submit" class="btn-primary btn-full">Sign In</button>
+      </form>
+
+      <p class="auth-switch">Don't have an account? <a href="#" onclick="switchCard('register')">Sign up</a></p>
+    </div>
+
+    <div class="auth-card hidden" id="registerCard">
+      <h2 class="auth-title">Create account</h2>
+      <p class="auth-subtitle">Join Quick Transport today</p>
+
+      <div id="registerAlert" class="alert hidden"></div>
+
+      <form id="registerForm" class="auth-form" action="php/register.php" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="regFirstName">First name</label>
+            <div class="input-wrap">
+              <input type="text" id="regFirstName" name="first_name" placeholder="John" required/>
+            </div>
+            <span class="field-error" id="regFirstNameErr"></span>
+          </div>
+          <div class="form-group">
+            <label for="regLastName">Last name</label>
+            <div class="input-wrap">
+              <input type="text" id="regLastName" name="last_name" placeholder="Doe" required/>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="regEmail">Email address</label>
+          <div class="input-wrap">
+            <span class="input-icon">✉</span>
+            <input type="email" id="regEmail" name="email" placeholder="you@example.com" required/>
+          </div>
+          <span class="field-error" id="regEmailErr"></span>
+        </div>
+        <div class="form-group">
+          <label for="regPhone">Phone number</label>
+          <div class="input-wrap">
+            <span class="input-icon">📱</span>
+            <input type="tel" id="regPhone" name="phone" placeholder="+91 98765 43210" required/>
+          </div>
+          <span class="field-error" id="regPhoneErr"></span>
+        </div>
+        <div class="form-group">
+          <label for="regPassword">Password</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="regPassword" name="password" placeholder="Min. 8 characters" required/>
+            <button type="button" class="toggle-pw" onclick="togglePw('regPassword',this)">👁</button>
+          </div>
+          <span class="field-error" id="regPasswordErr"></span>
+        </div>
+        <div class="form-group">
+          <label for="regConfirm">Confirm password</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="regConfirm" name="confirm_password" placeholder="Repeat password" required/>
+          </div>
+          <span class="field-error" id="regConfirmErr"></span>
+        </div>
+        <button type="submit" class="btn-primary btn-full">Create Account</button>
+      </form>
+
+      <p class="auth-switch">Already have an account? <a href="#" onclick="switchCard('login')">Sign in</a></p>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

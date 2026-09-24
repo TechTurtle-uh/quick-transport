@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quick Transport – Payments</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/payment.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand"><span class="brand-icon">⚡</span><span class="brand-name">Quick<b>Transport</b></span></div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="book.html">Book Ride</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="payment.html" class="active">Payments</a></li>
+      <li><a href="help.html">Help</a></li>
+    </ul>
+    <div class="nav-user">
+      <div class="user-avatar" id="userAvatar">U</div>
+      <span class="user-name" id="navUserName">User</span>
+      <div class="dropdown-menu"><a href="#" onclick="logoutUser()">Logout</a></div>
+    </div>
+    <button class="nav-toggle" onclick="toggleNav()">☰</button>
+  </nav>
+
+  <div class="page-hero payment-hero">
+    <div class="container">
+      <h1>Payment <span>Center</span></h1>
+      <p>Manage your wallet and transaction history</p>
+    </div>
+  </div>
+
+  <div class="container page-body">
+    <div class="payment-layout">
+      <!-- LEFT: WALLET & METHODS -->
+      <div class="payment-sidebar">
+        <!-- WALLET CARD -->
+        <div class="wallet-card">
+          <div class="wallet-bg-pattern"></div>
+          <div class="wallet-top">
+            <div class="wallet-icon">👛</div>
+            <div class="wallet-label">QT Wallet</div>
+          </div>
+          <div class="wallet-balance">₹<span id="walletBalance">0.00</span></div>
+          <div class="wallet-info">Available Balance</div>
+          <div class="wallet-actions">
+            <button class="w-btn" onclick="openAddMoney()">+ Add Money</button>
+            <button class="w-btn w-btn-ghost" onclick="openWithdraw()">Withdraw</button>
+          </div>
+        </div>
+
+        <!-- PAYMENT METHODS -->
+        <div class="sidebar-section">
+          <h4>Payment Methods</h4>
+          <div class="pm-list">
+            <div class="pm-item active">
+              <span class="pm-icon">💵</span>
+              <div class="pm-details"><b>Cash</b><span>Pay on trip</span></div>
+              <span class="pm-default">Default</span>
+            </div>
+            <div class="pm-item">
+              <span class="pm-icon">📲</span>
+              <div class="pm-details"><b>UPI</b><span>via any UPI app</span></div>
+              <span class="pm-add" onclick="addUpi()">+ Add</span>
+            </div>
+            <div class="pm-item">
+              <span class="pm-icon">💳</span>
+              <div class="pm-details"><b>Credit/Debit Card</b><span>Visa, Mastercard, RuPay</span></div>
+              <span class="pm-add" onclick="openAddCard()">+ Add</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMO CODE -->
+        <div class="sidebar-section">
+          <h4>Promo Code</h4>
+          <div class="promo-input">
+            <input type="text" id="promoCode" placeholder="Enter promo code"/>
+            <button onclick="applyPromo()" class="btn-primary">Apply</button>
+          </div>
+          <div id="promoMsg" class="promo-msg"></div>
+          <div class="promo-chips">
+            <span class="promo-chip" onclick="fillPromo('FIRST50')">FIRST50</span>
+            <span class="promo-chip" onclick="fillPromo('RIDE20')">RIDE20</span>
+            <span class="promo-chip" onclick="fillPromo('QT100')">QT100</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: TRANSACTION HISTORY -->
+      <div class="payment-main">
+        <div class="payment-tabs">
+          <button class="ptab active" onclick="switchTab('transactions', this)">Transactions</button>
+          <button class="ptab" onclick="switchTab('pending', this)">Pending</button>
+          <button class="ptab" onclick="switchTab('refunds', this)">Refunds</button>
+        </div>
+
+        <div class="payment-summary-bar">
+          <div class="ps-item"><span class="ps-icon income">↓</span><div><b id="totalIncome">₹0</b><span>Money Added</span></div></div>
+          <div class="ps-item"><span class="ps-icon expense">↑</span><div><b id="totalExpense">₹0</b><span>Total Spent</span></div></div>
+          <div class="ps-item"><span class="ps-icon savings">💰</span><div><b id="totalSavings">₹0</b><span>Saved via Promos</span></div></div>
+        </div>
+
+        <div id="transactionsList" class="transactions-list">
+          <div class="loading-block">
+            <div class="loading-spinner"></div>
+            <p>Loading transactions...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD MONEY MODAL -->
+  <div class="modal-overlay hidden" id="addMoneyModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('addMoneyModal')">✕</button>
+      <h3>Add Money to Wallet</h3>
+      <div class="amount-chips">
+        <button class="amount-chip" onclick="setAmount(100)">₹100</button>
+        <button class="amount-chip" onclick="setAmount(200)">₹200</button>
+        <button class="amount-chip" onclick="setAmount(500)">₹500</button>
+        <button class="amount-chip" onclick="setAmount(1000)">₹1000</button>
+      </div>
+      <div class="form-group">
+        <label>Or enter amount</label>
+        <div class="input-wrap">
+          <span class="input-icon">₹</span>
+          <input type="number" id="addMoneyAmt" placeholder="Enter amount" min="1"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Payment Method</label>
+        <div class="pm-options">
+          <label class="pm-opt"><input type="radio" name="addMethod" value="UPI" checked/><span>📲 UPI</span></label>
+          <label class="pm-opt"><input type="radio" name="addMethod" value="Card"/><span>💳 Card</span></label>
+          <label class="pm-opt"><input type="radio" name="addMethod" value="NetBanking"/><span>🏦 Net Banking</span></label>
+        </div>
+      </div>
+      <button class="btn-primary btn-full" onclick="processAddMoney()">Proceed to Pay</button>
+    </div>
+  </div>
+
+  <!-- ADD CARD MODAL -->
+  <div class="modal-overlay hidden" id="addCardModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('addCardModal')">✕</button>
+      <h3>Add Card</h3>
+      <div class="card-preview" id="cardPreview">
+        <div class="cp-number">•••• •••• •••• <span id="cpLast4">0000</span></div>
+        <div class="cp-name" id="cpName">Card Holder</div>
+        <div class="cp-exp" id="cpExp">MM/YY</div>
+        <div class="cp-brand">💳</div>
+      </div>
+      <div class="form-group">
+        <label>Card Number</label>
+        <div class="input-wrap">
+          <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Expiry</label>
+          <div class="input-wrap">
+            <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>CVV</label>
+          <div class="input-wrap">
+            <input type="password" id="cardCvv" placeholder="•••" maxlength="4"/>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Name on Card</label>
+        <div class="input-wrap">
+          <input type="text" id="cardName" placeholder="John Doe" oninput="updateCardPreview()"/>
+        </div>
+      </div>
+      <button class="btn-primary btn-full" onclick="saveCard()">Save Card</button>
+    </div>
+  </div>
+
+  <!-- PAYMENT SUCCESS MODAL -->
+  <div class="modal-overlay hidden" id="paySuccessModal">
+    <div class="modal-card success-modal">
+      <div class="success-anim"><div class="success-circle">✓</div></div>
+      <h2 id="paySuccessTitle">Payment Successful!</h2>
+      <p id="paySuccessMsg">₹500 added to your wallet</p>
+      <button class="btn-primary" onclick="closeModal('paySuccessModal')">Done</button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/payment.js"></script>
+</body>
+</html>

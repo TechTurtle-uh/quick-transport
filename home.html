@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quick Transport – Home</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/home.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="brand-icon">⚡</span>
+      <span class="brand-name">Quick<b>Transport</b></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="home.html" class="active">Home</a></li>
+      <li><a href="book.html">Book Ride</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="payment.html">Payments</a></li>
+      <li><a href="help.html">Help</a></li>
+    </ul>
+    <div class="nav-user">
+      <div class="user-avatar" id="userAvatar">U</div>
+      <span class="user-name" id="navUserName">User</span>
+      <div class="dropdown-menu">
+        <a href="profile.html">Profile</a>
+        <a href="#" onclick="logoutUser()" id="logoutBtn">Logout</a>
+      </div>
+    </div>
+    <button class="nav-toggle" onclick="toggleNav()">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-orb h1"></div>
+      <div class="hero-orb h2"></div>
+      <div class="road-lines">
+        <div class="road-line"></div>
+        <div class="road-line"></div>
+        <div class="road-line"></div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">🚀 India's fastest rides</div>
+      <h1 class="hero-title">Welcome to<br/><span>Quick Transport</span></h1>
+      <p class="hero-sub">Bikes, Cars, Autos — wherever you need to go.<br/>Book in seconds. Ride in minutes.</p>
+      <div class="hero-actions">
+        <a href="book.html" class="btn-primary">Book a Ride →</a>
+        <a href="history.html" class="btn-ghost">View History</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">2.4M+</span><span class="stat-label">Rides Done</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">50K+</span><span class="stat-label">Drivers</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">4.8★</span><span class="stat-label">Avg Rating</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="vehicle-card vc-car">
+        <div class="vc-icon">🚗</div>
+        <div class="vc-info"><b>Car</b><span>₹15/km</span></div>
+        <span class="vc-eta">4 min</span>
+      </div>
+      <div class="vehicle-card vc-bike">
+        <div class="vc-icon">🏍️</div>
+        <div class="vc-info"><b>Bike</b><span>₹7/km</span></div>
+        <span class="vc-eta">2 min</span>
+      </div>
+      <div class="vehicle-card vc-auto">
+        <div class="vc-icon">🛺</div>
+        <div class="vc-info"><b>Auto</b><span>₹10/km</span></div>
+        <span class="vc-eta">5 min</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK BOOK STRIP -->
+  <section class="quick-book">
+    <div class="container">
+      <div class="qb-card">
+        <h3>Quick Book</h3>
+        <form class="qb-form" id="quickBookForm">
+          <div class="qb-field">
+            <span class="qb-icon">📍</span>
+            <input type="text" id="qbPickup" placeholder="Pick-up location" required/>
+          </div>
+          <div class="qb-arrow">→</div>
+          <div class="qb-field">
+            <span class="qb-icon">🎯</span>
+            <input type="text" id="qbDrop" placeholder="Drop-off location" required/>
+          </div>
+          <button type="button" class="btn-primary" onclick="quickBook()">Go →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Our <span>Services</span></h2>
+        <p>Choose the ride that fits your need</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card" onclick="bookVehicle('Bike')">
+          <div class="sc-icon bike">🏍️</div>
+          <h3>Bike</h3>
+          <p>Fast and affordable for solo travel. Beat the traffic with ease.</p>
+          <div class="sc-price">From ₹7/km</div>
+          <div class="sc-features"><span>Solo</span><span>Fastest</span><span>Budget</span></div>
+          <button class="sc-btn">Book Bike</button>
+        </div>
+        <div class="service-card featured" onclick="bookVehicle('Car')">
+          <div class="sc-badge">Popular</div>
+          <div class="sc-icon car">🚗</div>
+          <h3>Car</h3>
+          <p>Comfortable rides for 1–4 passengers. AC available all year.</p>
+          <div class="sc-price">From ₹15/km</div>
+          <div class="sc-features"><span>4 Seats</span><span>AC</span><span>Comfort</span></div>
+          <button class="sc-btn">Book Car</button>
+        </div>
+        <div class="service-card" onclick="bookVehicle('Auto')">
+          <div class="sc-icon auto">🛺</div>
+          <h3>Auto</h3>
+          <p>Classic auto-rickshaw experience. Best for short distances.</p>
+          <div class="sc-price">From ₹10/km</div>
+          <div class="sc-features"><span>3 Seats</span><span>Open Air</span><span>Local</span></div>
+          <button class="sc-btn">Book Auto</button>
+        </div>
+        <div class="service-card" onclick="bookVehicle('SUV')">
+          <div class="sc-icon suv">🚙</div>
+          <h3>SUV</h3>
+          <p>Premium travel for groups up to 6. Spacious and luxurious.</p>
+          <div class="sc-price">From ₹22/km</div>
+          <div class="sc-features"><span>6 Seats</span><span>Premium</span><span>Luggage</span></div>
+          <button class="sc-btn">Book SUV</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works section">
+    <div class="container">
+      <div class="section-header">
+        <h2>How It <span>Works</span></h2>
+        <p>Three simple steps to your ride</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-icon">📍</div>
+          <h3>Enter Location</h3>
+          <p>Set your pickup and drop-off points with our smart location search.</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-icon">🚗</div>
+          <h3>Choose Vehicle</h3>
+          <p>Pick from Bike, Auto, Car, or SUV based on your needs and budget.</p>
+        </div>
+        <div class="step-connector"></div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-icon">💳</div>
+          <h3>Pay & Ride</h3>
+          <p>Pay securely online or in cash. Track your driver in real-time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECENT RIDES -->
+  <section class="recent-rides section" id="recentSection">
+    <div class="container">
+      <div class="section-header">
+        <h2>Recent <span>Rides</span></h2>
+        <a href="history.html" class="view-all">View all →</a>
+      </div>
+      <div class="rides-list" id="recentRides">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-icon">⚡</span>
+        <span class="brand-name">Quick<b>Transport</b></span>
+        <p>Your trusted ride partner</p>
+      </div>
+      <div class="footer-links">
+        <div class="fl-col"><h4>Company</h4><a href="#">About Us</a><a href="#">Careers</a><a href="#">Blog</a></div>
+        <div class="fl-col"><h4>Services</h4><a href="book.html">Book Ride</a><a href="history.html">History</a><a href="payment.html">Payments</a></div>
+        <div class="fl-col"><h4>Support</h4><a href="help.html">Help Center</a><a href="help.html">Contact</a><a href="#">Safety</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Quick Transport. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

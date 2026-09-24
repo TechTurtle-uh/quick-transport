@@ -1,0 +1,166 @@
+/* ===== PAYMENT PAGE ===== */
+.payment-hero{background:linear-gradient(135deg,var(--bg2),rgba(0,212,170,0.05))}
+.payment-layout{display:grid;grid-template-columns:340px 1fr;gap:28px}
+
+/* SIDEBAR */
+.payment-sidebar{display:flex;flex-direction:column;gap:20px}
+.sidebar-section{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:22px;
+}
+.sidebar-section h4{font-size:.875rem;color:var(--text-muted);font-family:var(--font-head);text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px}
+
+/* WALLET CARD */
+.wallet-card{
+  background:linear-gradient(135deg,#1a2640,#1a3530);
+  border:1px solid rgba(0,212,170,0.2);
+  border-radius:var(--radius-lg);padding:24px;
+  position:relative;overflow:hidden;
+}
+.wallet-bg-pattern{
+  position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 20%,rgba(0,212,170,0.1),transparent 60%),
+             radial-gradient(circle at 20% 80%,rgba(56,189,248,0.08),transparent 60%);
+}
+.wallet-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.wallet-icon{font-size:1.5rem}
+.wallet-label{font-size:.75rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.1em}
+.wallet-balance{
+  position:relative;z-index:1;
+  font-family:var(--font-head);font-size:2.2rem;font-weight:800;color:#fff;
+  margin-bottom:4px;
+}
+.wallet-info{position:relative;z-index:1;font-size:.8rem;color:rgba(255,255,255,0.5);margin-bottom:20px}
+.wallet-actions{position:relative;z-index:1;display:flex;gap:10px}
+.w-btn{
+  flex:1;background:rgba(0,212,170,0.15);border:1px solid rgba(0,212,170,0.3);
+  color:var(--accent3);border-radius:8px;padding:9px;font-size:.82rem;font-weight:600;
+  cursor:pointer;transition:all .2s;font-family:var(--font-head);
+}
+.w-btn:hover{background:rgba(0,212,170,0.25)}
+.w-btn-ghost{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.6)}
+.w-btn-ghost:hover{background:rgba(255,255,255,0.1)}
+
+/* PAYMENT METHODS LIST */
+.pm-list{display:flex;flex-direction:column;gap:10px}
+.pm-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;border-radius:10px;
+  background:var(--bg2);border:1px solid var(--border);transition:all .2s;
+}
+.pm-item.active{border-color:rgba(247,167,0,0.3);background:rgba(247,167,0,0.05)}
+.pm-icon{font-size:1.3rem}
+.pm-details{flex:1}
+.pm-details b{display:block;font-size:.875rem}
+.pm-details span{font-size:.75rem;color:var(--text-muted)}
+.pm-default{
+  background:var(--gradient);color:#000;
+  font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:4px;
+  font-family:var(--font-head);
+}
+.pm-add{color:var(--accent);font-size:.8rem;font-weight:600;cursor:pointer;transition:color .2s}
+.pm-add:hover{color:var(--accent2)}
+
+/* PROMO */
+.promo-input{display:flex;gap:8px;margin-bottom:8px}
+.promo-input input{flex:1;background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:var(--font-body);font-size:.875rem;outline:none}
+.promo-input input:focus{border-color:var(--accent)}
+.promo-input .btn-primary{padding:9px 16px;font-size:.82rem}
+.promo-msg{font-size:.8rem;height:20px;margin-bottom:8px}
+.promo-msg.ok{color:var(--success)}
+.promo-msg.err{color:var(--danger)}
+.promo-chips{display:flex;gap:8px;flex-wrap:wrap}
+.promo-chip{
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text-muted);font-size:.75rem;padding:5px 12px;
+  border-radius:6px;cursor:pointer;transition:all .2s;
+  font-family:var(--font-head);font-weight:600;
+}
+.promo-chip:hover{border-color:var(--accent);color:var(--accent)}
+
+/* PAYMENT MAIN */
+.payment-main{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.payment-tabs{display:flex;border-bottom:1px solid var(--border)}
+.ptab{
+  flex:1;padding:14px;background:none;border:none;
+  color:var(--text-muted);font-family:var(--font-head);font-size:.875rem;font-weight:600;
+  cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;
+}
+.ptab.active{color:var(--accent);border-bottom-color:var(--accent);background:rgba(247,167,0,0.04)}
+.ptab:hover:not(.active){color:var(--text)}
+
+.payment-summary-bar{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-bottom:1px solid var(--border);
+}
+.ps-item{
+  display:flex;align-items:center;gap:12px;padding:18px 20px;
+  border-right:1px solid var(--border);
+}
+.ps-item:last-child{border-right:none}
+.ps-icon{
+  width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
+}
+.ps-icon.income{background:rgba(34,197,94,0.12);color:var(--success)}
+.ps-icon.expense{background:rgba(239,68,68,0.12);color:var(--danger)}
+.ps-icon.savings{background:rgba(247,167,0,0.12);color:var(--accent)}
+.ps-item b{display:block;font-family:var(--font-head);font-size:1rem;margin-bottom:2px}
+.ps-item span{font-size:.75rem;color:var(--text-muted)}
+
+/* TRANSACTIONS */
+.transactions-list{padding:16px}
+.tx-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px;border-radius:10px;transition:background .15s;cursor:default;
+}
+.tx-item:hover{background:var(--surface2)}
+.tx-icon{
+  width:42px;height:42px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;
+}
+.tx-icon.credit{background:rgba(34,197,94,0.12)}
+.tx-icon.debit{background:rgba(239,68,68,0.12)}
+.tx-icon.refund{background:rgba(56,189,248,0.12)}
+.tx-info{flex:1}
+.tx-info b{display:block;font-size:.875rem;margin-bottom:3px}
+.tx-info span{font-size:.78rem;color:var(--text-muted)}
+.tx-amount{text-align:right;flex-shrink:0}
+.tx-amount b{display:block;font-family:var(--font-head);font-size:1rem;font-weight:700}
+.tx-amount span{font-size:.75rem;color:var(--text-muted)}
+.tx-amount.credit b{color:var(--success)}
+.tx-amount.debit b{color:var(--danger)}
+.tx-amount.refund b{color:var(--info)}
+
+/* CARD PREVIEW */
+.card-preview{
+  background:linear-gradient(135deg,#1a2040,#2a1040);
+  border-radius:14px;padding:24px;margin-bottom:20px;
+  position:relative;overflow:hidden;min-height:130px;
+}
+.card-preview::before{content:'';position:absolute;top:-30%;right:-20%;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.cp-number{font-family:var(--font-head);font-size:1rem;letter-spacing:.1em;color:rgba(255,255,255,0.8);margin-bottom:20px}
+.cp-name{color:rgba(255,255,255,0.7);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+.cp-exp{position:absolute;top:24px;right:24px;color:rgba(255,255,255,0.5);font-size:.8rem}
+.cp-brand{position:absolute;bottom:20px;right:24px;font-size:1.5rem}
+
+/* AMOUNT CHIPS */
+.amount-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.amount-chip{
+  flex:1;min-width:80px;
+  background:var(--surface2);border:1.5px solid var(--border);
+  color:var(--text-muted);border-radius:8px;padding:10px;
+  font-family:var(--font-head);font-weight:700;font-size:.9rem;cursor:pointer;
+  transition:all .2s;
+}
+.amount-chip:hover,.amount-chip.selected{
+  border-color:var(--accent);color:var(--accent);background:rgba(247,167,0,0.08);
+}
+
+@media(max-width:900px){
+  .payment-layout{grid-template-columns:1fr}
+  .payment-summary-bar{grid-template-columns:1fr}
+  .ps-item{border-right:none;border-bottom:1px solid var(--border)}
+  .ps-item:last-child{border-bottom:none}
+}

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quick Transport – Help Center</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/help.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand"><span class="brand-icon">⚡</span><span class="brand-name">Quick<b>Transport</b></span></div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="book.html">Book Ride</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="payment.html">Payments</a></li>
+      <li><a href="help.html" class="active">Help</a></li>
+    </ul>
+    <div class="nav-user">
+      <div class="user-avatar" id="userAvatar">U</div>
+      <span class="user-name" id="navUserName">User</span>
+      <div class="dropdown-menu"><a href="#" onclick="logoutUser()">Logout</a></div>
+    </div>
+    <button class="nav-toggle" onclick="toggleNav()">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <div class="help-hero">
+    <div class="help-hero-bg">
+      <div class="hh-orb o1"></div>
+      <div class="hh-orb o2"></div>
+    </div>
+    <div class="container hh-content">
+      <h1>Help <span>Center</span></h1>
+      <p>How can we help you today?</p>
+      <div class="help-search-bar">
+        <span>🔍</span>
+        <input type="text" id="helpSearch" placeholder="Search for answers..." oninput="searchFAQ()"/>
+      </div>
+      <div class="help-quick">
+        <button onclick="filterFAQ('booking')">🚗 Booking Issues</button>
+        <button onclick="filterFAQ('payment')">💳 Payment</button>
+        <button onclick="filterFAQ('safety')">🛡 Safety</button>
+        <button onclick="filterFAQ('account')">👤 Account</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="container page-body">
+    <div class="help-layout">
+      <!-- FAQ SECTION -->
+      <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list" id="faqList">
+          <!-- Category: Booking -->
+          <div class="faq-item" data-cat="booking">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>How do I book a ride?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>Booking a ride is simple! Click on "Book Ride" in the navigation bar. Enter your pickup and drop-off locations, choose your vehicle type (Bike, Auto, Car, or SUV), and click "Confirm Booking". A driver will be assigned to you immediately.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-cat="booking">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>Can I schedule a ride in advance?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>Yes! On the booking page, you can optionally select a future date and time for your ride. Your ride will be confirmed and a driver assigned closer to the scheduled time.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-cat="booking">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>How do I cancel a ride?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>Go to Ride History, find the ride you want to cancel, and click the "Cancel" button. Note that cancellations made after a driver has been assigned may incur a small cancellation fee of ₹30.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-cat="booking">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>What vehicles are available?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>We offer four vehicle types: <b>Bike</b> (₹7/km, 1 passenger), <b>Auto</b> (₹10/km, 3 passengers), <b>Car</b> (₹15/km, 4 passengers), and <b>SUV</b> (₹22/km, 6 passengers). All fares include a base fare of ₹30.</p>
+            </div>
+          </div>
+
+          <!-- Category: Payment -->
+          <div class="faq-item" data-cat="payment">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>What payment methods are accepted?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>We accept Cash, UPI, Credit/Debit Cards, and our QT Wallet. You can set your preferred payment method in the Payments section. For online payments, we support all major banks and UPI apps like GPay, PhonePe, and Paytm.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-cat="payment">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>How does the QT Wallet work?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>The QT Wallet is a digital wallet integrated into your account. You can add money to it via UPI, Card, or Net Banking, and use it for instant payments. Wallet payments are instant, secure, and you get exclusive cashback offers when paying via wallet.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-cat="payment">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>How do I get a refund?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>For cancelled rides paid online, refunds are processed within 3–5 business days. Wallet payments are refunded instantly. If you have a billing dispute, contact our support team below and we'll resolve it within 24 hours.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-cat="payment">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>Can I apply promo codes?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>Yes! Go to the Payments page and enter your promo code in the "Promo Code" section. Active codes: <b>FIRST50</b> (50% off first ride), <b>RIDE20</b> (₹20 off any ride), <b>QT100</b> (₹100 wallet cashback on adding ₹500+).</p>
+            </div>
+          </div>
+
+          <!-- Category: Safety -->
+          <div class="faq-item" data-cat="safety">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>Is it safe to ride with Quick Transport?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>Safety is our top priority. All drivers undergo background verification, document checks, and vehicle inspections. You can share your live trip with trusted contacts and access our SOS emergency button during the ride.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-cat="safety">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>What if I feel unsafe during a ride?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>Press the SOS button in the app immediately. This alerts our emergency team and can notify local authorities. You can also call our 24/7 emergency helpline at <b>1800-QT-SAFE (1800-87-7233)</b>.</p>
+            </div>
+          </div>
+
+          <!-- Category: Account -->
+          <div class="faq-item" data-cat="account">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>How do I change my password?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>Go to your Profile page, click "Security Settings", and select "Change Password". You'll need to enter your current password and then your new one. For forgotten passwords, use the "Forgot Password" link on the login page.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-cat="account">
+            <button class="faq-q" onclick="toggleFAQ(this)">
+              <span>How do I update my phone number?</span><span class="faq-chevron">▾</span>
+            </button>
+            <div class="faq-a">
+              <p>Visit your Profile page and click on "Edit Profile". You can update your phone number after OTP verification on your registered number. Note that phone number changes may require re-verification for security.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT SUPPORT -->
+      <div class="contact-section">
+        <div class="contact-card">
+          <h3>Still need help?</h3>
+          <p>Our support team is available 24/7</p>
+          <div class="contact-options">
+            <a href="#" class="co-item" onclick="openLiveChat()">
+              <div class="co-icon chat">💬</div>
+              <div class="co-info"><b>Live Chat</b><span>Avg. 2 min response</span></div>
+              <span class="co-arrow">→</span>
+            </a>
+            <a href="tel:18001234567" class="co-item">
+              <div class="co-icon phone">📞</div>
+              <div class="co-info"><b>Call Us</b><span>1800-123-4567 (Free)</span></div>
+              <span class="co-arrow">→</span>
+            </a>
+            <a href="mailto:support@quicktransport.in" class="co-item">
+              <div class="co-icon email">✉</div>
+              <div class="co-info"><b>Email Support</b><span>support@quicktransport.in</span></div>
+              <span class="co-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- CONTACT FORM -->
+        <div class="contact-form-card">
+          <h3>Send a Message</h3>
+          <div id="contactAlert" class="alert hidden"></div>
+          <form id="contactForm">
+            <div class="form-group">
+              <label>Subject</label>
+              <select id="subject">
+                <option value="">Select issue type</option>
+                <option value="booking">Booking Issue</option>
+                <option value="payment">Payment Problem</option>
+                <option value="driver">Driver Complaint</option>
+                <option value="lost">Lost Item</option>
+                <option value="refund">Refund Request</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Describe your issue</label>
+              <textarea id="issueDesc" rows="4" placeholder="Please describe your issue in detail..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Booking ID (if applicable)</label>
+              <input type="text" id="bookingIdInput" placeholder="e.g. QT-20250101-001"/>
+            </div>
+            <button type="button" class="btn-primary btn-full" onclick="submitContact()">Submit Request</button>
+          </form>
+        </div>
+
+        <!-- LIVE CHAT WIDGET -->
+        <div class="chat-widget hidden" id="chatWidget">
+          <div class="cw-header">
+            <span>💬 Quick Support</span>
+            <button onclick="closeLiveChat()">✕</button>
+          </div>
+          <div class="cw-messages" id="chatMessages">
+            <div class="cw-msg bot">
+              <div class="cw-bubble">Hi! I'm the Quick Transport support bot. How can I help you today?</div>
+            </div>
+          </div>
+          <div class="cw-input">
+            <input type="text" id="chatInput" placeholder="Type your message..." onkeydown="if(event.key==='Enter') sendChat()"/>
+            <button onclick="sendChat()">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-icon">⚡</span>
+        <span class="brand-name">Quick<b>Transport</b></span>
+        <p>Your trusted ride partner</p>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Quick Transport. All rights reserved.</p></div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/help.js"></script>
+</body>
+</html>

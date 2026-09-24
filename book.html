@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quick Transport – Book a Ride</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/book.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <style>
+    /* ── Map panel overrides ── */
+    .map-panel {
+      position: sticky;
+      top: 68px;
+      height: calc(100vh - 68px);
+      overflow: hidden;
+    }
+    .map-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    #realMap {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+    }
+    /* Info bar that floats over map */
+    .map-info {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      background: rgba(15,18,26,0.92);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(247,167,0,0.3);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      z-index: 900;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .mi-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 11px 18px;
+      font-family: var(--font-head, 'Syne', sans-serif);
+      font-size: .88rem;
+      font-weight: 600;
+      color: #fff;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .mi-item:last-child { border-right: none; }
+    /* Leaflet overrides for dark theme */
+    .leaflet-control-zoom a {
+      background: #1a1e2e !important;
+      color: #e0e0e0 !important;
+      border-color: rgba(255,255,255,0.1) !important;
+    }
+    .leaflet-control-zoom a:hover { background: #252a3d !important; }
+    .leaflet-tooltip {
+      background: #1a1e2e !important;
+      color: #fff !important;
+      border: 1px solid rgba(247,167,0,0.4) !important;
+      border-radius: 6px !important;
+      font-size: .82rem !important;
+    }
+    .leaflet-tooltip-top::before {
+      border-top-color: rgba(247,167,0,0.4) !important;
+    }
+    .leaflet-attribution-flag { display: none !important; }
+    .leaflet-control-attribution {
+      background: rgba(0,0,0,0.5) !important;
+      color: #aaa !important;
+      font-size: 9px !important;
+    }
+    @media(max-width:900px){
+      .map-panel { height: 380px; position: static; }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-brand"><span class="brand-icon">⚡</span><span class="brand-name">Quick<b>Transport</b></span></div>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="book.html" class="active">Book Ride</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="payment.html">Payments</a></li>
+      <li><a href="help.html">Help</a></li>
+    </ul>
+    <div class="nav-user">
+      <div class="user-avatar" id="userAvatar">U</div>
+      <span class="user-name" id="navUserName">User</span>
+      <div class="dropdown-menu">
+        <a href="#" onclick="logoutUser()">Logout</a>
+      </div>
+    </div>
+    <button class="nav-toggle" onclick="toggleNav()">☰</button>
+  </nav>
+
+  <div class="book-layout">
+    <!-- ── LEFT PANEL ── -->
+    <div class="book-panel">
+      <div class="panel-header">
+        <h2>Book Your Ride</h2>
+        <p>Tell us where you're going</p>
+      </div>
+
+      <!-- PROGRESS STEPS -->
+      <div class="booking-progress">
+        <div class="bp-step active" id="step1Ind"><span>1</span><label>Location</label></div>
+        <div class="bp-line"></div>
+        <div class="bp-step" id="step2Ind"><span>2</span><label>Vehicle</label></div>
+        <div class="bp-line"></div>
+        <div class="bp-step" id="step3Ind"><span>3</span><label>Confirm</label></div>
+      </div>
+
+      <div id="bookingAlert" class="alert hidden"></div>
+
+      <!-- STEP 1 : LOCATIONS -->
+      <div class="booking-step" id="step1">
+        <div class="form-group">
+          <label>📍 Pick-up Location</label>
+          <div class="input-wrap suggest-wrap">
+            <input type="text" id="pickup" placeholder="Search pickup location…"
+                   autocomplete="off" oninput="suggestLocation(this,'pickupSugg')" required/>
+            <button type="button" class="locate-btn" onclick="getCurrentLocation()">🎯</button>
+            <div class="suggestions" id="pickupSugg"></div>
+          </div>
+        </div>
+        <div class="route-toggle">
+          <button type="button" onclick="swapLocations()" class="swap-btn">⇅</button>
+        </div>
+        <div class="form-group">
+          <label>🎯 Drop-off Location</label>
+          <div class="input-wrap suggest-wrap">
+            <input type="text" id="dropoff" placeholder="Search drop location…"
+                   autocomplete="off" oninput="suggestLocation(this,'dropSugg')" required/>
+            <div class="suggestions" id="dropSugg"></div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>📅 Date (Optional)</label>
+            <div class="input-wrap"><input type="date" id="rideDate" min=""/></div>
+          </div>
+          <div class="form-group">
+            <label>⏰ Time (Optional)</label>
+            <div class="input-wrap"><input type="time" id="rideTime"/></div>
+          </div>
+        </div>
+        <button class="btn-primary btn-full" onclick="goToStep(2)">Next: Choose Vehicle →</button>
+      </div>
+
+      <!-- STEP 2 : VEHICLE -->
+      <div class="booking-step hidden" id="step2">
+        <div class="route-summary" id="routeSummary">
+          <div class="rs-point">📍 <span id="rsSrc">—</span></div>
+          <div class="rs-arrow">↓</div>
+          <div class="rs-point">🎯 <span id="rsDst">—</span></div>
+          <div class="rs-dist">Est. distance: <span id="rsDist">—</span></div>
+        </div>
+        <h3 class="step-label">Choose your ride</h3>
+        <div class="vehicle-options" id="vehicleOptions">
+          <label class="vehicle-opt" data-type="Bike">
+            <input type="radio" name="vehicle" value="Bike"/>
+            <div class="vo-card">
+              <div class="vo-icon">🏍️</div>
+              <div class="vo-info"><b>Bike</b><span>1 Passenger</span></div>
+              <div class="vo-price" id="bikePr">₹—</div>
+              <div class="vo-eta">~2 min</div>
+            </div>
+          </label>
+          <label class="vehicle-opt" data-type="Auto">
+            <input type="radio" name="vehicle" value="Auto"/>
+            <div class="vo-card">
+              <div class="vo-icon">🛺</div>
+              <div class="vo-info"><b>Auto</b><span>3 Passengers</span></div>
+              <div class="vo-price" id="autoPr">₹—</div>
+              <div class="vo-eta">~5 min</div>
+            </div>
+          </label>
+          <label class="vehicle-opt" data-type="Car">
+            <input type="radio" name="vehicle" value="Car"/>
+            <div class="vo-card">
+              <div class="vo-icon">🚗</div>
+              <div class="vo-info"><b>Car</b><span>4 Passengers</span></div>
+              <div class="vo-price" id="carPr">₹—</div>
+              <div class="vo-eta">~4 min</div>
+            </div>
+          </label>
+          <label class="vehicle-opt" data-type="SUV">
+            <input type="radio" name="vehicle" value="SUV"/>
+            <div class="vo-card">
+              <div class="vo-icon">🚙</div>
+              <div class="vo-info"><b>SUV</b><span>6 Passengers</span></div>
+              <div class="vo-price" id="suvPr">₹—</div>
+              <div class="vo-eta">~6 min</div>
+            </div>
+          </label>
+        </div>
+        <div class="step-nav">
+          <button class="btn-ghost" onclick="goToStep(1)">← Back</button>
+          <button class="btn-primary" onclick="goToStep(3)">Next: Confirm →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 : CONFIRM + PAYMENT -->
+      <div class="booking-step hidden" id="step3">
+        <div class="confirm-card" id="confirmCard">
+          <h3>Ride Summary</h3>
+          <div class="confirm-row"><span>From</span><b id="cfFrom">—</b></div>
+          <div class="confirm-row"><span>To</span><b id="cfTo">—</b></div>
+          <div class="confirm-row"><span>Vehicle</span><b id="cfVehicle">—</b></div>
+          <div class="confirm-row"><span>Date &amp; Time</span><b id="cfDateTime">Immediate</b></div>
+          <div class="confirm-row"><span>Distance</span><b id="cfDist">—</b></div>
+          <div class="confirm-divider"></div>
+          <div class="confirm-row fare-row"><span>Estimated Fare</span><b id="cfFare" class="fare-amt">₹—</b></div>
+        </div>
+        <div class="payment-method">
+          <h4>Payment Method</h4>
+          <div class="pm-options">
+            <label class="pm-opt"><input type="radio" name="payment" value="Cash" checked/><span>💵 Cash</span></label>
+            <label class="pm-opt"><input type="radio" name="payment" value="UPI"/><span>📲 UPI</span></label>
+            <label class="pm-opt"><input type="radio" name="payment" value="Card"/><span>💳 Card</span></label>
+            <label class="pm-opt"><input type="radio" name="payment" value="Wallet"/><span>👛 Wallet</span></label>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-ghost" onclick="goToStep(2)">← Back</button>
+          <button class="btn-primary" id="bookBtn" onclick="confirmBooking()">Confirm Booking ✓</button>
+        </div>
+      </div>
+    </div><!-- end .book-panel -->
+
+    <!-- ── RIGHT: MAP PANEL ── -->
+    <div class="map-panel">
+      <div class="map-container" id="mapContainer">
+        <div id="realMap"></div>
+        <div class="map-info">
+          <div class="mi-item">🕐 <span id="mapEta">— min</span></div>
+          <div class="mi-item">📏 <span id="mapDist">— km</span></div>
+          <div class="mi-item">💰 <span id="mapFare">₹—</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-overlay hidden" id="successModal">
+    <div class="modal-card success-modal">
+      <div class="success-anim"><div class="success-circle">✓</div></div>
+      <h2>Ride Booked!</h2>
+      <p>Your driver is on the way</p>
+      <div class="booking-id-box">Booking ID: <b id="bookingId">—</b></div>
+      <div class="driver-info">
+        <div class="driver-avatar">👤</div>
+        <div>
+          <b id="driverName">Rajesh Kumar</b>
+          <span id="driverVehicle">Car • DL-01-AB-1234</span>
+        </div>
+        <div class="driver-rating">4.9★</div>
+      </div>
+      <div class="modal-actions">
+        <a href="history.html" class="btn-ghost">View History</a>
+        <button class="btn-primary" onclick="closeSuccessModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/book.js"></script>
+  <script src="js/map.js"></script>
+</body>
+</html>

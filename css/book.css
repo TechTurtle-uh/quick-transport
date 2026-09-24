@@ -1,0 +1,214 @@
+/* ===== BOOK RIDE PAGE ===== */
+.book-layout{
+  display:grid;grid-template-columns:460px 1fr;
+  min-height:calc(100vh - 68px);margin-top:68px;
+}
+
+/* PANEL */
+.book-panel{
+  background:var(--bg2);border-right:1px solid var(--border);
+  padding:36px 32px;overflow-y:auto;
+  max-height:calc(100vh - 68px);position:sticky;top:68px;
+}
+.panel-header{margin-bottom:28px}
+.panel-header h2{font-size:1.5rem;margin-bottom:4px}
+.panel-header p{color:var(--text-muted);font-size:.9rem}
+
+/* PROGRESS */
+.booking-progress{
+  display:flex;align-items:center;gap:0;margin-bottom:32px;
+}
+.bp-step{
+  display:flex;flex-direction:column;align-items:center;gap:4px;flex:0 0 auto;
+}
+.bp-step span{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--surface2);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-weight:700;font-size:.85rem;
+  color:var(--text-muted);transition:all .3s;
+}
+.bp-step label{font-size:.7rem;color:var(--text-dim);transition:color .3s}
+.bp-step.active span{background:var(--gradient);border-color:transparent;color:#000}
+.bp-step.active label{color:var(--accent)}
+.bp-step.done span{background:var(--success);border-color:transparent;color:#fff}
+.bp-step.done label{color:var(--success)}
+.bp-line{flex:1;height:2px;background:var(--border);margin-bottom:16px;transition:background .3s}
+.bp-line.done{background:var(--success)}
+
+/* BOOKING STEPS */
+.booking-step{display:flex;flex-direction:column;gap:18px}
+
+/* SUGGESTIONS */
+.suggest-wrap{position:relative}
+.suggestions{
+  position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:200;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-sm);overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+.sugg-item{
+  padding:11px 14px;cursor:pointer;font-size:.875rem;
+  display:flex;align-items:center;gap:10px;transition:background .15s;
+}
+.sugg-item:hover{background:var(--surface2)}
+.sugg-item .si-icon{font-size:1rem;opacity:.7}
+
+.route-toggle{display:flex;justify-content:center}
+.swap-btn{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:50%;width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--text-muted);font-size:1.1rem;
+  transition:all .2s;
+}
+.swap-btn:hover{background:var(--surface);color:var(--accent);transform:rotate(180deg)}
+
+.locate-btn{
+  position:absolute;right:8px;background:var(--surface2);border:none;
+  border-radius:6px;padding:6px 8px;cursor:pointer;font-size:.85rem;
+  color:var(--accent);transition:all .2s;
+}
+.locate-btn:hover{background:rgba(247,167,0,0.12)}
+
+/* ROUTE SUMMARY */
+.route-summary{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;
+}
+.rs-point{font-size:.875rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.rs-point:last-child{margin-bottom:0}
+.rs-arrow{color:var(--text-dim);font-size:.75rem;margin-left:10px;margin-bottom:4px}
+.rs-dist{font-size:.78rem;color:var(--text-dim);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+
+.step-label{font-size:.95rem;color:var(--text-muted);margin-bottom:-8px}
+
+/* VEHICLE OPTIONS */
+.vehicle-options{display:flex;flex-direction:column;gap:10px}
+.vehicle-opt input{display:none}
+.vo-card{
+  display:flex;align-items:center;gap:14px;
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--radius);padding:14px 16px;
+  cursor:pointer;transition:all .25s;
+}
+.vo-card:hover{border-color:rgba(247,167,0,0.3)}
+.vehicle-opt input:checked ~ .vo-card{
+  border-color:var(--accent);
+  background:rgba(247,167,0,0.06);
+  box-shadow:0 0 0 3px rgba(247,167,0,0.12);
+}
+.vo-icon{font-size:1.6rem;flex-shrink:0}
+.vo-info{flex:1}
+.vo-info b{display:block;font-family:var(--font-head);font-size:.95rem;margin-bottom:2px}
+.vo-info span{font-size:.78rem;color:var(--text-muted)}
+.vo-price{font-family:var(--font-head);font-weight:700;color:var(--accent);font-size:1rem}
+.vo-eta{font-size:.75rem;color:var(--text-dim);padding:3px 8px;background:var(--surface2);border-radius:5px;margin-left:8px}
+
+.step-nav{display:flex;gap:12px;justify-content:space-between}
+
+/* CONFIRM */
+.confirm-card{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px;
+}
+.confirm-card h3{margin-bottom:16px}
+.confirm-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;font-size:.875rem}
+.confirm-row span{color:var(--text-muted)}
+.confirm-row b{font-weight:600;text-align:right;max-width:60%;font-size:.85rem}
+.confirm-divider{height:1px;background:var(--border);margin:8px 0}
+.fare-row{font-size:1rem!important}
+.fare-amt{font-family:var(--font-head);font-size:1.2rem!important;color:var(--accent)}
+
+/* PAYMENT METHOD */
+.payment-method h4{margin-top:20px;margin-bottom:12px;font-size:.9rem;color:var(--text-muted)}
+.pm-options{display:flex;gap:8px;flex-wrap:wrap}
+.pm-opt{cursor:pointer}
+.pm-opt input{display:none}
+.pm-opt span{
+  display:flex;align-items:center;gap:6px;
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:8px;padding:8px 14px;font-size:.85rem;
+  transition:all .2s;
+}
+.pm-opt input:checked ~ span{
+  border-color:var(--accent);color:var(--accent);
+  background:rgba(247,167,0,0.06);
+}
+
+/* SUCCESS MODAL */
+.booking-id-box{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:10px 16px;font-size:.85rem;
+  margin:16px 0;
+}
+.driver-info{
+  display:flex;align-items:center;gap:14px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;margin-bottom:4px;
+}
+.driver-avatar{font-size:2rem}
+.driver-info b{display:block;font-family:var(--font-head)}
+.driver-info span{font-size:.78rem;color:var(--text-muted);display:block}
+.driver-rating{margin-left:auto;font-family:var(--font-head);color:var(--accent);font-weight:700}
+
+@media(max-width:900px){
+  .book-layout{grid-template-columns:1fr;margin-top:68px}
+  .book-panel{position:static;max-height:none}
+  .map-panel{height:350px;position:static}
+}
+
+
+/* ===== MAP PANEL ===== */
+.map-panel{
+  position:sticky;top:68px;
+  height:calc(100vh - 68px);
+  overflow:hidden;
+}
+.map-container{
+  position:relative;width:100%;height:100%;
+}
+#realMap{
+  width:100%;height:100%;min-height:400px;
+}
+.map-info{
+  position:absolute;bottom:20px;left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  background:rgba(15,18,26,0.92);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(247,167,0,0.3);
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+  z-index:900;pointer-events:none;white-space:nowrap;
+}
+.mi-item{
+  display:flex;align-items:center;gap:7px;
+  padding:11px 18px;
+  font-family:var(--font-head);font-size:.88rem;font-weight:600;
+  color:#fff;
+  border-right:1px solid rgba(255,255,255,0.08);
+}
+.mi-item:last-child{border-right:none}
+
+/* Leaflet customisation */
+.leaflet-control-zoom a{
+  background:#1a1e2e!important;color:#e0e0e0!important;
+  border-color:rgba(255,255,255,0.1)!important;
+}
+.leaflet-control-zoom a:hover{background:#252a3d!important}
+.leaflet-tooltip{
+  background:#1a1e2e!important;color:#fff!important;
+  border:1px solid rgba(247,167,0,0.4)!important;
+  border-radius:6px!important;font-size:.82rem!important;
+}
+.leaflet-attribution-flag{display:none!important}
+.leaflet-control-attribution{
+  background:rgba(0,0,0,0.5)!important;color:#aaa!important;font-size:9px!important;
+}
+
+@media(max-width:900px){
+  .book-layout{grid-template-columns:1fr;margin-top:68px}
+  .book-panel{position:static;max-height:none}
+  .map-panel{height:380px;position:static}
+}
